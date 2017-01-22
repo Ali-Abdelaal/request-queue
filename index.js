@@ -3,5 +3,6 @@ var producer = require('./lib/producer');
 producer.init();
 
 setInterval(function () {
-    producer.sendRequest('some work');
+    var request = producer.buildRequest("127.0.0.1", "ping")
+    producer.sendRequest(request);
 }, 500);
