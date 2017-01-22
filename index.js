@@ -1,5 +1,5 @@
 const constants = require('./lib/constants');
-var producer = require('./lib/producer');
+var producer = require('./lib/zeromq/producer');
 
 producer.init();
 
