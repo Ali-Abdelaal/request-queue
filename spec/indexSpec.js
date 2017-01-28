@@ -1,17 +1,29 @@
-describe("Index module", function () {
-    process.env.bindingTarget = "tcp://127.0.0.1:3000";
+describe("Index module:", function () {
+    // set bindingTarget environment variable
+    process.env.MQ_ADDRESS = "tcp://127.0.0.1:3000";
+
+    var mock = {};
+    mock.producer = (function () {
+        var obj = function () { };
+
+        obj.prototype.init = function (bindingTarget) { };
+
+        obj.prototype.buildRequest = function (address, type) { };
+
+        obj.prototype.sendRequest = function (request) { };
+
+        return obj;
+    })();
 
     const _constants = require('../lib/constants');
-    var _index = require('../index'),
-        _producer = require('../lib/zeromq/producer');
+    var _index = require('../index');
 
     var index,
-        producer,
         constants;
 
     beforeEach(function () {
         index = _index;
-        producer = _producer;
+        index.producer = new mock.producer();
         constants = _constants;
     });
 
@@ -24,10 +36,19 @@ describe("Index module", function () {
             expect(!!index.init).toBe(true);
         });
 
-        it('should be init producer mq', function () {
-            spyOn(producer, 'init');
+        it('should be init request producer', function () {
+            spyOn(index.producer, 'init').and.callThrough();
             index.init();
-            expect(producer.init).toHaveBeenCalled();
+            expect(index.producer.init).toHaveBeenCalled();
+        });
+
+        it('should handle MQ_ADDRESS not exists error', function () {
+            process.env.MQ_ADDRESS = undefined;
+            // IT ALSO Call producer.init ??
+
+            //spyOn(process, 'exit').and.callThrough();
+            //index.init();
+            //expect(process.exit).toHaveBeenCalled();
         });
     });
 
