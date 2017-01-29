@@ -46,9 +46,9 @@ describe("Index module:", function () {
             process.env.MQ_ADDRESS = undefined;
             // IT ALSO Call producer.init ??
 
-            //spyOn(process, 'exit').and.callThrough();
-            //index.init();
-            //expect(process.exit).toHaveBeenCalled();
+            spyOn(process, 'exit').and.callThrough();
+            index.init();
+            expect(process.exit).toHaveBeenCalled();
         });
     });
 

@@ -11,7 +11,6 @@ describe("producer module", function () {
         return obj;
     })();
 
-
     const _constants = require('../../../lib/constants');
     var _zmq = require('zmq')
         , _winston = require('winston')
@@ -35,7 +34,6 @@ describe("producer module", function () {
     });
 
     describe("init function", function () {
-
         it('should be exist', function () {
             expect(!!producer.init).toBe(true);
         });
@@ -45,7 +43,6 @@ describe("producer module", function () {
             producer.init("adrress");
             expect(producer.socket.bindSync).toHaveBeenCalled();
         });
-
     });
 
     describe("buildRequest function", function () {
