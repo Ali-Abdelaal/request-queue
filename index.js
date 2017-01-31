@@ -1,13 +1,15 @@
-const constants = require('./lib/constants');
-var producer = require('./lib/zeromq/producer')
+const constants = require('./constants');
+var config = require('./config'),
+    producer = require('./lib/producer')
     , winston = require('winston');
 
 var index = exports;
-
 index.producer = producer;
 
 index.init = function () {
+    // SET In configuration ?
     var address = process.env.MQ_ADDRESS;
+
     if (!address) {
         winston.log('info', "Please, you should spesify 'MQ_ADDRESS' ENV VARIABLE.")
         process.exit(1);

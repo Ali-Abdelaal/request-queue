@@ -1,3 +1,9 @@
+
+var mq_type = {
+    ZERO_MQ: 'zeromq',
+    RABBIT_MQ: 'rabbitmq'
+};
+
 var zmq = {
     socketType: {
         push: "push",
@@ -13,7 +19,14 @@ var resolveType = {
     ping: 3,
 };
 
+var rabbitmq = {
+    REQ_QUEUE: 'request_queue',
+    REP_QUEUE: 'reply_queue',
+};
+
 module.exports = {
+    mq_type: mq_type,
     zmq: zmq,
-    resolveType: resolveType
+    resolveType: resolveType,
+    rabbitmq: rabbitmq
 };
