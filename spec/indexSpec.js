@@ -1,9 +1,9 @@
 describe("Index module:", function () {
     // set bindingTarget environment variable
     process.env.MQ_ADDRESS = "tcp://127.0.0.1:3000";
-    var config = require('../config');
+    var _config = require('../config');
     const _constants = require('../constants');
-    config.mq.type = _constants.mq_type.ZERO_MQ;
+    _config.mq.type = _constants.mq_type.ZERO_MQ;
 
     var mock = {};
     mock.producer = (function () {
@@ -21,12 +21,14 @@ describe("Index module:", function () {
     var _index = require('../index');
 
     var index,
+        config,
         constants;
 
     beforeEach(function () {
         index = _index;
         index.producer = new mock.producer();
         constants = _constants;
+        config = _config;
     });
 
     it('should be exist', function () {
@@ -45,10 +47,8 @@ describe("Index module:", function () {
         });
 
         it('should handle MQ_ADDRESS not exists error', function () {
-            process.env.MQ_ADDRESS = undefined;
-            // IT ALSO Call producer.init ??
-
-            spyOn(process, 'exit').and.callThrough();
+            config.mq.address = undefined;
+            spyOn(process, 'exit');
             index.init();
             expect(process.exit).toHaveBeenCalled();
         });

@@ -7,15 +7,12 @@ var index = exports;
 index.producer = producer;
 
 index.init = function () {
-    // SET In configuration ?
-    var address = process.env.MQ_ADDRESS;
-
-    if (!address) {
+    if (!config.mq.address) {
         winston.log('info', "Please, you should spesify 'MQ_ADDRESS' ENV VARIABLE.")
         process.exit(1);
     }
 
-    index.producer.init(address);
+    index.producer.init(config.mq.address);
 };
 
 index.init();
